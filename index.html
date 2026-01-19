@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Geography 585: Quantitative Methods in Geographic Research – GEOG 585</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-67a454c823f0b95208dd2bdc6c2dfe0a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">GEOG 585</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#course-information" id="toc-course-information" class="nav-link active" data-scroll-target="#course-information">Course Information</a></li>
+  <li><a href="#course-description" id="toc-course-description" class="nav-link" data-scroll-target="#course-description">Course Description</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
+  <li><a href="#organization" id="toc-organization" class="nav-link" data-scroll-target="#organization">Organization</a></li>
+  <li><a href="#reference-and-readings" id="toc-reference-and-readings" class="nav-link" data-scroll-target="#reference-and-readings">Reference and Readings</a></li>
+  <li><a href="#schedule-and-course-topics" id="toc-schedule-and-course-topics" class="nav-link" data-scroll-target="#schedule-and-course-topics">Schedule and Course Topics</a></li>
+  <li><a href="#software-and-tools" id="toc-software-and-tools" class="nav-link" data-scroll-target="#software-and-tools">Software and Tools</a></li>
+  <li><a href="#assessment" id="toc-assessment" class="nav-link" data-scroll-target="#assessment">Assessment</a></li>
+  <li><a href="#policies" id="toc-policies" class="nav-link" data-scroll-target="#policies">Policies</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="index.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Geography 585: Quantitative Methods in Geographic Research</h1>
+<p class="subtitle lead">Spring 2026</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="course-information" class="level2">
+<h2 class="anchored" data-anchor-id="course-information">Course Information</h2>
+<p><strong>Instructor:</strong> Dr.&nbsp;Sergio J. Rey<br>
+<strong>Email:</strong> srey@sdsu.edu<br>
+<strong>Class Meeting Times:</strong> Tu/Th, 9:30-10:45<br>
+<strong>Class Location:</strong> SH 325<br>
+<strong>Office Hours:</strong> Tuesdays, 11:00-12:00<br>
+<strong>Office:</strong> PSFA 361G</p>
+<p><strong>Teaching Assistant:</strong> Dylan Skrah<br>
+<strong>Email:</strong> dskrah5938@sdsu.edu<br>
+<strong>Office Hours:</strong> Tuesdays, 1:00-2:00<br>
+<strong>Office:</strong> PSFA 361E</p>
+<hr>
+</section>
+<section id="course-description" class="level2">
+<h2 class="anchored" data-anchor-id="course-description">Course Description</h2>
+<p>This course advances student understanding of quantitative geography beyond basic mapping and descriptive statistics. We focus on three core pillars of modern spatial data science: <strong>Multivariate Exploration</strong>, <strong>Confirmatory Modeling (Spatial Econometrics and Regression)</strong>, and <strong>Spatial Machine Learning</strong>.</p>
+</section>
+<section id="prerequisites" class="level2">
+<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
+<p>This course builds directly on <a href="https://sergerey.org/geog385s26/syllabus.html">GEOG 385 (Spatial Data Analysis)</a> or an equivalent course and assumes a high level of quantitative and computational readiness. Students are expected to be comfortable with:</p>
+<ul>
+<li>Descriptive statistics, basic inferential statistics, and probability theory</li>
+<li>Core spatial data concepts (vector data, CRS, spatial dependence, neighborhood structure)</li>
+<li>Python programming in Jupyter notebooks, including NumPy and pandas</li>
+<li>Reading, adapting, and debugging example code independently</li>
+</ul>
+<p>This course does not teach Python, statistics, or spatial data concepts from first principles.</p>
+<p>Students should be prepared to work in a Jupyter-based environment, use Git/GitHub for submission, and follow reproducible computational workflows. Instruction will focus on methods, interpretation, and reasoning, not software fundamentals. Students are not expected to be experts in all listed areas on day one, but should be prepared to learn independently and fill gaps as needed.</p>
+<p>Students who are unsure about their preparation are strongly encouraged to consult the instructor during the first two weeks of the semester.</p>
+<p>Students should expect to spend approximately 6 hours per week on coursework outside of scheduled class meetings.</p>
+</section>
+<section id="organization" class="level2">
+<h2 class="anchored" data-anchor-id="organization">Organization</h2>
+<p>This course utilizes a <strong>flipped classroom</strong> approach to maximize hands-on learning.</p>
+<ul>
+<li><strong>Pre-Class (Asynchronous):</strong> Watch recorded lecture modules covering theoretical derivations and conceptual frameworks <em>before</em> Tuesday's class.</li>
+<li><strong>Tuesday (Synthesis &amp; Implementation):</strong> Q&amp;A discussion on theory, followed by computational instruction implementing concepts in Python (PySAL/Scikit-Learn).</li>
+<li><strong>Thursday (Collaborative Studio):</strong> Work in pairs or small teams to solve an empirical "challenge" problem. The instructor acts as a facilitator.</li>
+</ul>
+</section>
+<section id="reference-and-readings" class="level2">
+<h2 class="anchored" data-anchor-id="reference-and-readings">Reference and Readings</h2>
+<p>The main textbook for the class is:</p>
+<ul>
+<li>Rey, Arribas-Bel, Wolf, "Geographic Data Science with Python", Chapman &amp; Hall, 2023. (<a href="https://geographicdata.science/book/intro.html">online</a>)</li>
+</ul>
+<p>To prepare for our upcoming lecture sessions, we have assigned required readings for your review. It is crucial that you complete these assignments before our next class meeting on Tuesday. Assigned readings will be made available on the Course Canvas page.</p>
+</section>
+<section id="schedule-and-course-topics" class="level2">
+<h2 class="anchored" data-anchor-id="schedule-and-course-topics">Schedule and Course Topics</h2>
+<section id="module-i-multivariate-exploration-structure" class="level3">
+<h3 class="anchored" data-anchor-id="module-i-multivariate-exploration-structure">Module I: Multivariate Exploration &amp; Structure</h3>
+<p><em>Focus: Dimensionality reduction, clustering, and pattern detection.</em></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Week</th>
+<th style="text-align: left;">Date</th>
+<th style="text-align: left;">Activity &amp; Content (L: Recorded lecture video)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">Jan 20</td>
+<td style="text-align: left;"><strong>Tuesday:</strong> Course Intro &amp; The Modern Stack. Reproducible envs (conda), Git.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Jan 22</td>
+<td style="text-align: left;"><strong>Thursday:</strong> Studio: Infrastructure.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><em>Reading:</em> Arribas-Bel, D., &amp; Reades, J. (2018). Geography and computers: Past, present, and future.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Jan 27</td>
+<td style="text-align: left;"><strong>Tuesday:</strong> Maps as Multivariate Processes. <a href="https://www.youtube.com/watch?v=96fpBc3veQA&amp;list=PL68GC8kTZb8A34Pwokz6nyvI-3yXYrC_2">L1a</a>, <a href="https://youtu.be/MASJ276ZkxQ?si=oxdsax4--beMyrAo">L1b</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Jan 29</td>
+<td style="text-align: left;"><strong>Thursday:</strong> Studio: Representing Multivariate Relations.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><em>Reading</em>: Rey, S.J. et al.&nbsp;(2023). Spatial Data.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">Feb 3</td>
+<td style="text-align: left;"><strong>Tuesday:</strong> Multivariate ESDA. Bivariate Moran, Cross-correlation, Geary’s C.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Feb 5</td>
+<td style="text-align: left;"><strong>Thursday:</strong> Studio: "The Trade-off." Analyze spatial correlation between competing variables.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><em>Reading:</em> Anselin, L. (2019). A Local Indicator of Multivariate Spatial Association: Extending Geary's c.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Feb 10</td>
+<td style="text-align: left;"><strong>Tuesday:</strong> Dimensionality Reduction. PCA and Factor Analysis in a spatial context.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Feb 12</td>
+<td style="text-align: left;"><strong>Thursday:</strong> Studio: Creating a localized "Index of Deprivation."</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><em>Reading:</em> Demsar, U. et al.&nbsp;(2013). Principal Component Analysis on Spatial Data: An Overview.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Feb 17</td>
+<td style="text-align: left;"><strong>Tuesday:</strong> Unsupervised Clustering. K-Means, DBSCAN, Hierarchical.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Feb 19</td>
+<td style="text-align: left;"><strong>Thursday:</strong> Studio: "Geodemographics." Cluster neighborhoods based on lifestyle data.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><em>Reading:</em> Rey, S.J. et al.&nbsp;(2023). Clustering and Regionalization.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="11bd937e-5b1c-4cf9-a7c4-081b8abd9a87" class="level3">
+<h3 class="anchored" data-anchor-id="11bd937e-5b1c-4cf9-a7c4-081b8abd9a87">Module II: Inference &amp; Spatial Econometrics</h3>
+<p><em>Focus: Identification, diagnostics, and modeling spatial processes.</em></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Week</th>
+<th style="text-align: left;">Date</th>
+<th style="text-align: left;">Activity &amp; Content</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">Feb 24</td>
+<td style="text-align: left;"><strong>Tuesday:</strong> OLS Diagnostics. Assumptions &amp; Spatial Autocorrelation.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Feb 26</td>
+<td style="text-align: left;"><strong>Thursday:</strong> Studio: Fit hedonic house price model. Diagnose OLS failures.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><em>Reading:</em> Anselin, L. (2010). Thirty years of spatial econometrics.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">Mar 3</td>
+<td style="text-align: left;"><strong>Tuesday:</strong> Global Spatial Regression. Spatial Lag vs Error. ML Estimation.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Mar 5</td>
+<td style="text-align: left;"><strong>Thursday:</strong> Studio: "Diffusion vs Noise." Estimate technology adoption model.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><em>Reading:</em> Elhorst, J. P. (2010). Applied spatial econometrics: raising the bar.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">Mar 10</td>
+<td style="text-align: left;"><strong>Tuesday:</strong> Heterogeneity I: Regimes. Structural breaks &amp; Chow tests.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Mar 12</td>
+<td style="text-align: left;"><strong>Thursday:</strong> Studio: "North/South Divide." Test coefficient differences across partitions.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><em>Reading:</em> Anselin, L. (1990). Spatial dependence and spatial structural instability.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">Mar 17</td>
+<td style="text-align: left;"><strong>Tuesday:</strong> Spatial Data Science Summit (No Class).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Mar 19</td>
+<td style="text-align: left;"><strong>Thursday:</strong> AAG (No Class)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">Mar 24</td>
+<td style="text-align: left;"><strong>Tuesday:</strong> Heterogeneity II: GWR &amp; MGWR. Bandwidth selection (`mgwr`).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Mar 26</td>
+<td style="text-align: left;"><strong>Thursday:</strong> Studio: "Mapping Coefficients." Visualize parameter variation across the US.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><em>Reading:</em> Fotheringham, A. S., et al.&nbsp;(2017). Multiscale Geographically Weighted Regression.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="spring-break" class="level3">
+<h3 class="anchored" data-anchor-id="spring-break">Spring Break</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Week</th>
+<th style="text-align: left;">Date</th>
+<th style="text-align: left;">Activity &amp; Content</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">–</td>
+<td style="text-align: left;">Mar 31</td>
+<td style="text-align: left;"><strong>NO CLASS (Spring Break)</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">–</td>
+<td style="text-align: left;">Apr 2</td>
+<td style="text-align: left;"><strong>NO CLASS (Spring Break)</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-iii-spatial-machine-learning" class="level3">
+<h3 class="anchored" data-anchor-id="module-iii-spatial-machine-learning">Module III: Spatial Machine Learning</h3>
+<p><em>Focus: Prediction, non-linearity, and validation strategies.</em></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Week</th>
+<th style="text-align: left;">Date</th>
+<th style="text-align: left;">Activity &amp; Content</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">Apr 7</td>
+<td style="text-align: left;"><strong>Tuesday:</strong> Spatial Feature Engineering. Embedding "space" into <span class="math inline">\(X\)</span>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Apr 9</td>
+<td style="text-align: left;"><strong>Thursday:</strong> Studio: Engineer 50+ spatial features for Scikit-Learn.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><em>Reading:</em> Rey, S.J. et al.&nbsp;(2023). Spatial Feature Engineering.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">11</td>
+<td style="text-align: left;">Apr 14</td>
+<td style="text-align: left;"><strong>Tuesday:</strong> Tree-Based Methods. Random Forests &amp; XGBoost in Space.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Apr 16</td>
+<td style="text-align: left;"><strong>Thursday:</strong> Studio: "The Bake-off." Beat OLS <span class="math inline">\(R^2\)</span> using XGBoost.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><em>Reading:</em> Georganos, S., et al.&nbsp;(2021). Geographical Random Forests: A spatial regression approach.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">Apr 21</td>
+<td style="text-align: left;"><strong>Tuesday:</strong> Spatial Cross-Validation. Leakage, Blocking, and Buffered CV.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Apr 23</td>
+<td style="text-align: left;"><strong>Thursday:</strong> Studio: "Truth in Accuracy." Compare random CV vs Spatial CV metrics.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><em>Reading:</em> Roberts, D. R., et al.&nbsp;(2017). Cross-validation strategies for data with spatial structure.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">13</td>
+<td style="text-align: left;">Apr 28</td>
+<td style="text-align: left;"><strong>Tuesday:</strong> Explainable Spatial AI (XAI). SHAP values &amp; Partial Dependence.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Apr 30</td>
+<td style="text-align: left;"><strong>Thursday:</strong> Studio: "Opening the Black Box." Explain local model predictions.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><em>Reading:</em> Mussl, A., et al.&nbsp;(2023). Spatial-XAI: Explaining Black Box Models of Geographic Data.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">14</td>
+<td style="text-align: left;">May 5</td>
+<td style="text-align: left;"><strong>Tuesday:</strong> Presentations.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">May 7</td>
+<td style="text-align: left;"><strong>Thursday:</strong> Presentations.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="software-and-tools" class="level2">
+<h2 class="anchored" data-anchor-id="software-and-tools">Software and Tools</h2>
+<section id="computational-strategy" class="level3">
+<h3 class="anchored" data-anchor-id="computational-strategy">Computational Strategy</h3>
+<p>This course moves beyond GUI-based GIS to a programmatic environment focused on reproducibility and scalability. We utilize the "Modern Stack" of Python-based spatial data science tools.</p>
+</section>
+<section id="the-python-spatial-data-science-stack" class="level3">
+<h3 class="anchored" data-anchor-id="the-python-spatial-data-science-stack">The Python Spatial Data Science Stack</h3>
+<p>Our workflow is built upon a federation of libraries that handle the three core pillars of the course:</p>
+<section id="core-data-handling-and-visualization" class="level4">
+<h4 class="anchored" data-anchor-id="core-data-handling-and-visualization">1. Core Data Handling and Visualization</h4>
+<ol type="1">
+<li><p><strong>GeoPandas</strong>: Extends the pandas library to allow for spatial operations on geometric types and tabular data.</p></li>
+<li><p><strong>Matplotlib &amp; Contextily</strong>: Used for static cartography and adding web-based basemaps to spatial plots.</p></li>
+<li><p><strong>Folium</strong>: For creating interactive web maps to explore model results.</p></li>
+</ol>
+</section>
+<section id="spatial-analysis-and-econometrics" class="level4">
+<h4 class="anchored" data-anchor-id="spatial-analysis-and-econometrics">2. Spatial Analysis and Econometrics</h4>
+<ol type="1">
+<li><p><strong>PySAL (Python Spatial Analysis Library)</strong>: The primary engine for the course. We will use:</p></li>
+<li><p><code>libpysal</code> for spatial weights ().</p></li>
+<li><p><code>esda</code> for global and local spatial autocorrelation (Moran's I, Geary's C).</p></li>
+<li><p><code>spreg</code> for spatial regression models (Lag, Error, and Regimes).</p></li>
+<li><p><strong>mgwr</strong>: Specialized library for Multiscale Geographically Weighted Regression to model spatially varying processes.</p></li>
+<li><p><strong>spopt</strong>: For spatial optimization, including regionalization and territory design.</p></li>
+</ol>
+</section>
+<section id="spatial-machine-learning" class="level4">
+<h4 class="anchored" data-anchor-id="spatial-machine-learning">3. Spatial Machine Learning</h4>
+<ol type="1">
+<li><p><strong>Scikit-Learn</strong>: The industry standard for clustering, dimensionality reduction, and supervised learning.</p></li>
+<li><p><strong>XGBoost</strong>: For high-performance gradient boosted decision trees in spatial prediction tasks.</p></li>
+<li><p><strong>SHAP</strong>: For Explainable AI (XAI) to interpret "black box" spatial model predictions.</p></li>
+</ol>
+</section>
+</section>
+<section id="collaborative-environment-google-colab" class="level3">
+<h3 class="anchored" data-anchor-id="collaborative-environment-google-colab">Collaborative Environment (Google Colab)</h3>
+<p>Google Colab will be used for in-class collaboration and instructional consistency, and guidance will be provided for students who wish to install and use the course conda environment on their own machines for local reproducibility.</p>
+</section>
+</section>
+<section id="assessment" class="level2">
+<h2 class="anchored" data-anchor-id="assessment">Assessment</h2>
+<p>This course utilizes Specification Grading, a system designed to provide clear pathways to success and reduce grading ambiguity. Unlike traditional point-based grading, your final grade is determined by achieving specific "bundles" of work to a professional standard. You are assessed on whether you have met the rigorous quality standards—the "specifications"—for each assignment on a Pass/Fail or Credit/No-Credit basis. This approach shifts the focus from "point-hunting" to mastery of the material, allowing you to choose the grade you wish to earn and follow the documented requirements to achieve it. If an assignment falls short of the specifications, you may use a Token to revise and resubmit your work, ensuring that the final grade reflects your ultimate proficiency in the subject matter.</p>
+<p>The course assessment emphasizes continuous, low-stakes evaluation of student learning and engagement.</p>
+<section id="weekly-video-and-reading-quizzes" class="level3">
+<h3 class="anchored" data-anchor-id="weekly-video-and-reading-quizzes">Weekly Video and Reading Quizzes</h3>
+<ul>
+<li>Frequency: 1 per week (Weeks 1–14)</li>
+<li>Purpose: Ensure preparation and engagement with assigned readings and videos.</li>
+<li>Format: Short, low-stakes quizzes (e.g., multiple choice, short answer, concept checks).</li>
+<li>Grading: Pass / fail based on satisfactory completion.</li>
+</ul>
+</section>
+<section id="exit-tickets" class="level3">
+<h3 class="anchored" data-anchor-id="exit-tickets">Exit Tickets</h3>
+<ul>
+<li>Frequency: 1 per each meeting</li>
+<li>Purpose: Formative assessment of conceptual understanding and reflection on in-class activities.</li>
+<li>Format: 1–3 short prompts (e.g., key takeaway, muddiest point, brief application).</li>
+<li>Grading: Credit / no-credit.</li>
+</ul>
+</section>
+<section id="three-exercises" class="level3">
+<h3 class="anchored" data-anchor-id="three-exercises">Three Exercises</h3>
+<p>We will carry out three multi-week analysis exercises that emphasize applied spatial data analysis and interpretation. To earn a Pass, a submission must satisfy all four quality pillars below:</p>
+<p>Computational Reproducibility</p>
+<ul>
+<li>Execution: The Python notebook (`.ipynb`) must execute from top to bottom without errors in the specified `conda` environment.</li>
+<li>Documentation: Code blocks must be preceded by Markdown cells explaining the logic, choice of parameters, and the theoretical derivations involved.</li>
+<li>Structure: Data must be correctly ingested and transformed into a normalized matrix format as required by modern spatial data science workflows.</li>
+</ul>
+<p>Methodological Rigor</p>
+<ul>
+<li>Implementation*: Proper application of the "Modern Stack," including PySAL, Scikit-Learn, or `mgwr`.</li>
+<li>Spatial Structure: Correct definition and justification of spatial processes, such as Spatial Lag vs.&nbsp;Error or bandwidth selection.</li>
+<li>Diagnostics: Inclusion and correct interpretation of diagnostic tests, such as Moran's I, Chow tests for structural breaks, or spatial cross-validation metrics.</li>
+</ul>
+<p>Visual and Cartographic Clarity</p>
+<ul>
+<li>Mapping: Every map must include a descriptive title and a legible legend to effectively visualize parameter variation or cluster results.</li>
+<li>Interpretation: Complex plots (like SHAP values, partial dependence, or geodemographic clusters) must be sized and labeled for clear viewing and explanation.</li>
+<li>Reproducibility: All visualizations must be generated using reproducible code within the Git-managed environment.</li>
+</ul>
+<p>Interpretation and Synthesis</p>
+<ul>
+<li>Theory Connection: Written analysis must link computational findings to the assigned geographic readings and conceptual frameworks.</li>
+<li>Spatial Insight: Interpretation must address the three core pillars: Multivariate Exploration, Causal Inference, and Spatial Machine Learning.</li>
+<li>Applied Problem-Solving: The student must demonstrate the ability to solve empirical "challenge" problems and interpret results within a geographic context.</li>
+</ul>
+<p>Resubmission and Tokens</p>
+<ul>
+<li>If any of the above criteria are not met, the exercise is marked <strong>Incomplete</strong>.</li>
+<li>Token Usage: Students may spend one of their <strong>2 Tokens</strong> to submit an exercise 48 hours late or retake an assessment to reach a "Pass".</li>
+</ul>
+</section>
+<section id="final-project" class="level3">
+<h3 class="anchored" data-anchor-id="final-project">Final Project</h3>
+<p>The final project is a <strong>capstone empirical analysis</strong> that integrates concepts and methods from across the course. Students will design, execute, and communicate a spatial data analysis addressing a substantive geographic research question using tools developed in the three course modules.</p>
+<p>The emphasis is on <strong>methodological reasoning, interpretation, and synthesis</strong>, rather than technical novelty.</p>
+<section id="project-scope-and-expectations" class="level4">
+<h4 class="anchored" data-anchor-id="project-scope-and-expectations">Project Scope and Expectations</h4>
+<p>The final project must:</p>
+<ul>
+<li>Address a clearly articulated geographic research question</li>
+<li>Use spatially referenced data</li>
+<li>Apply methods from <strong>at least two course modules</strong></li>
+<li>Be fully reproducible (code, data, and workflow)</li>
+<li>Include substantive interpretation of results and limitations</li>
+</ul>
+<p>Projects may extend one of the module exercises or pursue a new application, subject to instructor approval.</p>
+</section>
+<section id="interim-milestones-required" class="level4">
+<h4 class="anchored" data-anchor-id="interim-milestones-required">Interim Milestones (Required)</h4>
+<p>To support steady progress and reduce end-of-semester risk, the final project includes required interim milestones. All milestones are evaluated on a <strong>credit / no-credit</strong> basis and function as gates to the final submission.</p>
+<ol type="1">
+<li><p>Project Proposal (Credit / No Credit)</p>
+<dl>
+<dt>Due</dt>
+<dd>
+Week 6
+</dd>
+</dl>
+<p><strong>Contents (≈ 1 page):</strong></p>
+<ul>
+<li>Research question and motivation</li>
+<li>Proposed outcome variable</li>
+<li>Preliminary covariates and spatial unit of analysis</li>
+<li>Initial thoughts on applicable course methods</li>
+</ul>
+<p><strong>Purpose:</strong> Confirm feasibility, spatial grounding, and alignment with course objectives.</p></li>
+<li><p>Data Approval and Description (Credit / No Credit)</p>
+<dl>
+<dt>Due</dt>
+<dd>
+Week 8
+</dd>
+</dl>
+<p><strong>Contents:</strong></p>
+<ul>
+<li>Description of all datasets to be used</li>
+<li>Spatial scale and geographic extent</li>
+<li>Data provenance and known limitations</li>
+<li>Preliminary exploratory figures or maps</li>
+</ul>
+<p><strong>Purpose:</strong> Ensure data quality and appropriateness before substantive modeling begins.</p></li>
+<li><p>Methods Plan (Credit / No Credit)</p>
+<dl>
+<dt>Due</dt>
+<dd>
+Week 10
+</dd>
+</dl>
+<p><strong>Contents (≈ 1–2 pages):</strong></p>
+<ul>
+<li>Proposed analytical workflow</li>
+<li>Justification for selected methods</li>
+<li>Anticipated challenges (e.g., spatial dependence, heterogeneity, validation)</li>
+</ul>
+<p><strong>Purpose:</strong> Shift focus from <strong>what tools will be used</strong> to <strong>why they are appropriate</strong>.</p></li>
+<li><p>Preliminary Results Check-in (Credit / No Credit)</p>
+<dl>
+<dt>Due</dt>
+<dd>
+Week 13
+</dd>
+</dl>
+<p><strong>Contents:</strong></p>
+<ul>
+<li>Initial results (tables, figures, or maps)</li>
+<li>Brief interpretation of emerging patterns</li>
+<li>Identification of unresolved issues or concerns</li>
+</ul>
+<p><strong>Purpose:</strong> Identify conceptual or technical problems early and support synthesis.</p></li>
+<li><p>Final Submission and Presentation</p></li>
+<li><p>Written and Computational Submission</p>
+<dl>
+<dt>Due</dt>
+<dd>
+Prior to final presentations
+</dd>
+</dl>
+<p>Required components:</p>
+<ul>
+<li>Reproducible notebook(s)</li>
+<li>Final figures and tables</li>
+<li>Written report (≈ 8–10 pages), including:
+<ul>
+<li>Research question and motivation</li>
+<li>Data and methods</li>
+<li>Results and interpretation</li>
+<li>Limitations and future directions</li>
+</ul></li>
+</ul></li>
+<li><p>Oral Presentation</p>
+<dl>
+<dt>Scheduled</dt>
+<dd>
+<p>Week 15 (and Final Exam Period)</p>
+</dd>
+<dt>Time</dt>
+<dd>
+<p>15 minutes total per student</p>
+<ul>
+<li>12 minutes presentation</li>
+<li>3 minutes questions</li>
+</ul>
+</dd>
+</dl>
+<p>Presentations will be timed strictly. Emphasis should be on <strong>interpretation and integration</strong>, not technical detail.</p></li>
+<li><p>Evaluation (Specification-Based)</p>
+<p>The final project is evaluated using specification grading:</p>
+<ul>
+<li><strong>Unsatisfactory</strong> — Missing elements, unclear reasoning, or reproducibility issues</li>
+<li><strong>Pass</strong> — Meets all project specifications with coherent analysis and interpretation</li>
+<li><strong>High Pass</strong> — Strong synthesis across modules, clear reasoning, and thoughtful discussion of limitations</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="course-grade" class="level3">
+<h3 class="anchored" data-anchor-id="course-grade">Course Grade</h3>
+<p>The final grade is determined by applying your project result as a modifier to the base grade earned through weekly quizzes, exit tickets, and exercises.</p>
+<section id="base-grade" class="level4">
+<h4 class="anchored" data-anchor-id="base-grade">Base Grade</h4>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Level</th>
+<th style="text-align: left;">Quizzes</th>
+<th style="text-align: left;">Exit Tickets</th>
+<th style="text-align: left;">Exercises</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">13</td>
+<td style="text-align: left;">26</td>
+<td style="text-align: left;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A-</td>
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">24</td>
+<td style="text-align: left;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">B+</td>
+<td style="text-align: left;">11</td>
+<td style="text-align: left;">22</td>
+<td style="text-align: left;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">B-</td>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">18</td>
+<td style="text-align: left;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">C+</td>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">16</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">14</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">C-</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">D+</td>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">D</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">D-</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">1</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="final-grade" class="level4">
+<h4 class="anchored" data-anchor-id="final-grade">Final Grade</h4>
+<p>Your course project combines with your base grade to determine the final grade.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Project Result</th>
+<th style="text-align: left;">Final Grade Outcome</th>
+<th style="text-align: left;">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">High Pass</td>
+<td style="text-align: left;">Base Grade 1 Step</td>
+<td style="text-align: left;">B+ becomes A-</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pass</td>
+<td style="text-align: left;">Base Grade remains unchanged</td>
+<td style="text-align: left;">B+ remains B+</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Unsatisfactory</td>
+<td style="text-align: left;">Base Grade - 1 Step</td>
+<td style="text-align: left;">B+ becomes B</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Not Submitted</td>
+<td style="text-align: left;">Base Grade - 1 Level</td>
+<td style="text-align: left;">B+ becomes C+</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="tokens" class="level3">
+<h3 class="anchored" data-anchor-id="tokens">Tokens</h3>
+<p>Each student starts the semester with 2 "tokens". You can spend a token to retake a quiz or submit an exercise 48 hours late. Tokens cannot be exchanged between students.</p>
+</section>
+</section>
+<section id="policies" class="level2">
+<h2 class="anchored" data-anchor-id="policies">Policies</h2>
+<section id="use-of-ai-and-automated-tools" class="level3">
+<h3 class="anchored" data-anchor-id="use-of-ai-and-automated-tools">Use of AI and Automated Tools</h3>
+<p>Students are permitted to use AI-assisted tools (e.g., large language models) as part of their regular workflow, including for conceptual clarification, exploratory coding, debugging, refactoring, documentation drafting, and learning new libraries or methods. AI tools may also be used to generate initial code scaffolding or draft explanations, provided that students review, modify, and fully understand the resulting output.</p>
+<p>All submitted work must ultimately reflect the student’s own reasoning, methodological choices, and interpretation. Students are responsible for verifying the correctness, appropriateness, and originality of any AI-assisted content. When AI tools are used in a substantive way, students should include a brief acknowledgment describing how the tool was used.</p>
+<p>Use of AI tools does not exempt students from the course standards for reproducibility, methodological rigor, or interpretation. Submissions that demonstrate superficial understanding, uncritical reliance on automated output, or misinterpretation of results will not meet specification requirements, regardless of tool use.</p>
+</section>
+<section id="collaboration-code-reuse-and-academic-integrity" class="level3">
+<h3 class="anchored" data-anchor-id="collaboration-code-reuse-and-academic-integrity">Collaboration, Code Reuse, and Academic Integrity</h3>
+<p>Collaboration is encouraged in discussions, studio activities, and conceptual problem-solving. However, all submitted work must reflect individual understanding and authorship unless explicitly designated as group work. Reuse of external code (e.g., documentation examples, open-source repositories, or course-provided templates) is permitted when it is clearly cited and meaningfully adapted to the task at hand. Submitting copied code or analyses without attribution, or presenting collaborative work as individual work, constitutes academic dishonesty.</p>
+</section>
+<section id="accessibility-and-accommodations" class="level3">
+<h3 class="anchored" data-anchor-id="accessibility-and-accommodations">Accessibility and Accommodations</h3>
+<p>Students who require accommodations due to a disability or other documented need are encouraged to contact Student Disability Services and notify the instructor as early as possible. Reasonable accommodations will be made in accordance with university policy to support equitable access to course materials, activities, and assessments.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
