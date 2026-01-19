@@ -1,0 +1,18 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "GEOG 585"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    number-sections: true
+    link-external-newwindow: true

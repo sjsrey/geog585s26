@@ -1,0 +1,541 @@
+---
+title: "Geography 585: Quantitative Methods in Geographic Research"
+subtitle: "Spring 2026"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: false
+    theme: cosmo
+  pdf:
+    toc: true
+    number-sections: false
+---
+
+## Course Information
+**Instructor:** Dr. Sergio J. Rey  
+**Email:** srey@sdsu.edu  
+**Class Meeting Times:** Tu/Th, 9:30-10:45  
+**Class Location:** SH 325  
+**Office Hours:** Tuesdays, 11:00-12:00  
+**Office:** PSFA 361G  
+
+**Teaching Assistant:** Dylan Skrah  
+**Email:** dskrah5938@sdsu.edu  
+**Office Hours:** Tuesdays, 1:00-2:00  
+**Office:** PSFA 361E 
+
+---
+
+## Course Description
+
+This course advances student understanding of quantitative geography
+beyond basic mapping and descriptive statistics. We focus on three core
+pillars of modern spatial data science: **Multivariate Exploration**,
+**Confirmatory Modeling (Spatial Econometrics and Regression)**, and
+**Spatial Machine Learning**.
+
+## Prerequisites
+
+This course builds directly on [GEOG 385 (Spatial Data Analysis)](https://sergerey.org/geog385s26/syllabus.html) or an
+equivalent course and assumes a high level of quantitative and
+computational readiness. Students are expected to be comfortable with:
+
+-   Descriptive statistics, basic inferential statistics, and
+    probability theory
+-   Core spatial data concepts (vector data, CRS, spatial dependence,
+    neighborhood structure)
+-   Python programming in Jupyter notebooks, including NumPy and pandas
+-   Reading, adapting, and debugging example code independently
+
+This course does not teach Python, statistics, or spatial data concepts
+from first principles.
+
+Students should be prepared to work in a Jupyter-based environment, use
+Git/GitHub for submission, and follow reproducible computational
+workflows. Instruction will focus on methods, interpretation, and
+reasoning, not software fundamentals. Students are not expected to be
+experts in all listed areas on day one, but should be prepared to learn
+independently and fill gaps as needed.
+
+Students who are unsure about their preparation are strongly encouraged
+to consult the instructor during the first two weeks of the semester.
+
+Students should expect to spend approximately 6 hours per week on
+coursework outside of scheduled class meetings.
+
+## Organization
+
+This course utilizes a **flipped classroom** approach to maximize
+hands-on learning.
+
+-   **Pre-Class (Asynchronous):** Watch recorded lecture modules
+    covering theoretical derivations and conceptual frameworks *before*
+    Tuesday\'s class.
+-   **Tuesday (Synthesis & Implementation):** Q&A discussion on theory,
+    followed by computational instruction implementing concepts in
+    Python (PySAL/Scikit-Learn).
+-   **Thursday (Collaborative Studio):** Work in pairs or small teams to
+    solve an empirical \"challenge\" problem. The instructor acts as a
+    facilitator.
+
+## Reference and Readings
+
+The main textbook for the class is:
+
+-   Rey, Arribas-Bel, Wolf, \"Geographic Data Science with Python\",
+    Chapman & Hall, 2023.
+    ([online](https://geographicdata.science/book/intro.html))
+
+To prepare for our upcoming lecture sessions, we have assigned required
+readings for your review. It is crucial that you complete these
+assignments before our next class meeting on Tuesday. Assigned readings will be made available on the Course Canvas page.
+
+## Schedule and Course Topics
+
+### Module I: Multivariate Exploration & Structure
+
+*Focus: Dimensionality reduction, clustering, and pattern detection.*
+
+  Week   Date     Activity & Content (L: Recorded lecture video)
+  ------ -------- -------------------------------------------------------------------------------------------------------------
+  0      Jan 20   **Tuesday:** Course Intro & The Modern Stack. Reproducible envs (conda), Git.
+         Jan 22   **Thursday:** Studio: Infrastructure.
+                  *Reading:* Arribas-Bel, D., & Reades, J. (2018). Geography and computers: Past, present, and future.
+  1      Jan 27   **Tuesday:** Maps as Multivariate Processes. [L1a][L1a], [L1b][L1b]
+         Jan 29   **Thursday:** Studio: Representing Multivariate Relations.
+                  *Reading*: Rey, S.J. et al. (2023). Spatial Data.
+  2      Feb 3    **Tuesday:** Multivariate ESDA. Bivariate Moran, Cross-correlation, Geary's C.
+         Feb 5    **Thursday:** Studio: \"The Trade-off.\" Analyze spatial correlation between competing variables.
+                  *Reading:* Anselin, L. (2019). A Local Indicator of Multivariate Spatial Association: Extending Geary\'s c.
+  3      Feb 10   **Tuesday:** Dimensionality Reduction. PCA and Factor Analysis in a spatial context.
+         Feb 12   **Thursday:** Studio: Creating a localized \"Index of Deprivation.\"
+                  *Reading:* Demsar, U. et al. (2013). Principal Component Analysis on Spatial Data: An Overview.
+  4      Feb 17   **Tuesday:** Unsupervised Clustering. K-Means, DBSCAN, Hierarchical.
+         Feb 19   **Thursday:** Studio: \"Geodemographics.\" Cluster neighborhoods based on lifestyle data.
+                  *Reading:* Rey, S.J. et al. (2023). Clustering and Regionalization.
+
+### Module II: Inference & Spatial Econometrics {#module-ii-inference-spatial-econometrics id="11bd937e-5b1c-4cf9-a7c4-081b8abd9a87"}
+
+*Focus: Identification, diagnostics, and modeling spatial processes.*
+
+  Week   Date     Activity & Content
+  ------ -------- -----------------------------------------------------------------------------------------------
+  5      Feb 24   **Tuesday:** OLS Diagnostics. Assumptions & Spatial Autocorrelation.
+         Feb 26   **Thursday:** Studio: Fit hedonic house price model. Diagnose OLS failures.
+                  *Reading:* Anselin, L. (2010). Thirty years of spatial econometrics.
+  6      Mar 3    **Tuesday:** Global Spatial Regression. Spatial Lag vs Error. ML Estimation.
+         Mar 5    **Thursday:** Studio: \"Diffusion vs Noise.\" Estimate technology adoption model.
+                  *Reading:* Elhorst, J. P. (2010). Applied spatial econometrics: raising the bar.
+  7      Mar 10   **Tuesday:** Heterogeneity I: Regimes. Structural breaks & Chow tests.
+         Mar 12   **Thursday:** Studio: \"North/South Divide.\" Test coefficient differences across partitions.
+                  *Reading:* Anselin, L. (1990). Spatial dependence and spatial structural instability.
+  8      Mar 17   **Tuesday:** Spatial Data Science Summit (No Class).
+         Mar 19   **Thursday:** AAG (No Class)
+  9      Mar 24   **Tuesday:** Heterogeneity II: GWR & MGWR. Bandwidth selection (\`mgwr\`).
+         Mar 26   **Thursday:** Studio: \"Mapping Coefficients.\" Visualize parameter variation across the US.
+                  *Reading:* Fotheringham, A. S., et al. (2017). Multiscale Geographically Weighted Regression.
+                  
+[L1a]: https://www.youtube.com/watch?v=96fpBc3veQA&list=PL68GC8kTZb8A34Pwokz6nyvI-3yXYrC_2
+[L1b]: https://youtu.be/MASJ276ZkxQ?si=oxdsax4--beMyrAo
+
+
+### Spring Break
+
+  Week   Date     Activity & Content
+  ------ -------- -----------------------------
+  --     Mar 31   **NO CLASS (Spring Break)**
+  --     Apr 2    **NO CLASS (Spring Break)**
+
+### Module III: Spatial Machine Learning
+
+*Focus: Prediction, non-linearity, and validation strategies.*
+
+  Week   Date     Activity & Content
+  ------ -------- --------------------------------------------------------------------------------------------------------
+  10     Apr 7    **Tuesday:** Spatial Feature Engineering. Embedding \"space\" into $X$.
+         Apr 9    **Thursday:** Studio: Engineer 50+ spatial features for Scikit-Learn.
+                  *Reading:* Rey, S.J. et al. (2023). Spatial Feature Engineering.
+  11     Apr 14   **Tuesday:** Tree-Based Methods. Random Forests & XGBoost in Space.
+         Apr 16   **Thursday:** Studio: \"The Bake-off.\" Beat OLS $R^2$ using XGBoost.
+                  *Reading:* Georganos, S., et al. (2021). Geographical Random Forests: A spatial regression approach.
+  12     Apr 21   **Tuesday:** Spatial Cross-Validation. Leakage, Blocking, and Buffered CV.
+         Apr 23   **Thursday:** Studio: \"Truth in Accuracy.\" Compare random CV vs Spatial CV metrics.
+                  *Reading:* Roberts, D. R., et al. (2017). Cross-validation strategies for data with spatial structure.
+  13     Apr 28   **Tuesday:** Explainable Spatial AI (XAI). SHAP values & Partial Dependence.
+         Apr 30   **Thursday:** Studio: \"Opening the Black Box.\" Explain local model predictions.
+                  *Reading:* Mussl, A., et al. (2023). Spatial-XAI: Explaining Black Box Models of Geographic Data.
+  14     May 5    **Tuesday:** Presentations.
+         May 7    **Thursday:** Presentations.
+
+## Software and Tools
+
+### Computational Strategy
+
+This course moves beyond GUI-based GIS to a programmatic environment
+focused on reproducibility and scalability. We utilize the \"Modern
+Stack\" of Python-based spatial data science tools.
+
+### The Python Spatial Data Science Stack
+
+Our workflow is built upon a federation of libraries that handle the
+three core pillars of the course:
+
+#### 1. Core Data Handling and Visualization
+
+1.  **GeoPandas**: Extends the pandas library to allow for spatial
+    operations on geometric types and tabular data.
+
+2.  **Matplotlib & Contextily**: Used for static cartography and adding
+    web-based basemaps to spatial plots.
+
+3.  **Folium**: For creating interactive web maps to explore model
+    results.
+
+#### 2. Spatial Analysis and Econometrics
+
+1.  **PySAL (Python Spatial Analysis Library)**: The primary engine for
+    the course. We will use:
+
+2.  `libpysal` for spatial weights ().
+
+3.  `esda` for global and local spatial autocorrelation (Moran\'s I,
+    Geary\'s C).
+
+4.  `spreg` for spatial regression models (Lag, Error, and Regimes).
+
+5.  **mgwr**: Specialized library for Multiscale Geographically Weighted
+    Regression to model spatially varying processes.
+
+6.  **spopt**: For spatial optimization, including regionalization and
+    territory design.
+
+#### 3. Spatial Machine Learning
+
+1.  **Scikit-Learn**: The industry standard for clustering,
+    dimensionality reduction, and supervised learning.
+
+2.  **XGBoost**: For high-performance gradient boosted decision trees in
+    spatial prediction tasks.
+
+3.  **SHAP**: For Explainable AI (XAI) to interpret \"black box\"
+    spatial model predictions.
+
+### Collaborative Environment (Google Colab)
+
+Google Colab will be used for in-class collaboration and instructional
+consistency, and guidance will be provided for students who wish to
+install and use the course conda environment on their own machines for
+local reproducibility.
+
+## Assessment
+
+This course utilizes Specification Grading, a system designed to provide
+clear pathways to success and reduce grading ambiguity. Unlike
+traditional point-based grading, your final grade is determined by
+achieving specific \"bundles\" of work to a professional standard. You
+are assessed on whether you have met the rigorous quality
+standards---the \"specifications\"---for each assignment on a Pass/Fail
+or Credit/No-Credit basis. This approach shifts the focus from
+\"point-hunting\" to mastery of the material, allowing you to choose the
+grade you wish to earn and follow the documented requirements to achieve
+it. If an assignment falls short of the specifications, you may use a
+Token to revise and resubmit your work, ensuring that the final grade
+reflects your ultimate proficiency in the subject matter.
+
+The course assessment emphasizes continuous, low-stakes evaluation of
+student learning and engagement.
+
+### Weekly Video and Reading Quizzes
+
+-   Frequency: 1 per week (Weeks 1--14)
+-   Purpose: Ensure preparation and engagement with assigned readings
+    and videos.
+-   Format: Short, low-stakes quizzes (e.g., multiple choice, short
+    answer, concept checks).
+-   Grading: Pass / fail based on satisfactory completion.
+
+### Exit Tickets
+
+-   Frequency: 1 per each meeting
+-   Purpose: Formative assessment of conceptual understanding and
+    reflection on in-class activities.
+-   Format: 1--3 short prompts (e.g., key takeaway, muddiest point,
+    brief application).
+-   Grading: Credit / no-credit.
+
+### Three Exercises
+
+We will carry out three multi-week analysis exercises that emphasize
+applied spatial data analysis and interpretation. To earn a Pass, a
+submission must satisfy all four quality pillars below:
+
+Computational Reproducibility
+
+-   Execution: The Python notebook (\`.ipynb\`) must execute from top to
+    bottom without errors in the specified \`conda\` environment.
+-   Documentation: Code blocks must be preceded by Markdown cells
+    explaining the logic, choice of parameters, and the theoretical
+    derivations involved.
+-   Structure: Data must be correctly ingested and transformed into a
+    normalized matrix format as required by modern spatial data science
+    workflows.
+
+Methodological Rigor
+
+-   Implementation\*: Proper application of the \"Modern Stack,\"
+    including PySAL, Scikit-Learn, or \`mgwr\`.
+-   Spatial Structure: Correct definition and justification of spatial
+    processes, such as Spatial Lag vs. Error or bandwidth selection.
+-   Diagnostics: Inclusion and correct interpretation of diagnostic
+    tests, such as Moran\'s I, Chow tests for structural breaks, or
+    spatial cross-validation metrics.
+
+Visual and Cartographic Clarity
+
+-   Mapping: Every map must include a descriptive title and a legible
+    legend to effectively visualize parameter variation or cluster
+    results.
+-   Interpretation: Complex plots (like SHAP values, partial dependence,
+    or geodemographic clusters) must be sized and labeled for clear
+    viewing and explanation.
+-   Reproducibility: All visualizations must be generated using
+    reproducible code within the Git-managed environment.
+
+Interpretation and Synthesis
+
+-   Theory Connection: Written analysis must link computational findings
+    to the assigned geographic readings and conceptual frameworks.
+-   Spatial Insight: Interpretation must address the three core pillars:
+    Multivariate Exploration, Causal Inference, and Spatial Machine
+    Learning.
+-   Applied Problem-Solving: The student must demonstrate the ability to
+    solve empirical \"challenge\" problems and interpret results within
+    a geographic context.
+
+Resubmission and Tokens
+
+-   If any of the above criteria are not met, the exercise is marked
+    **Incomplete**.
+-   Token Usage: Students may spend one of their **2 Tokens** to
+    submit an exercise 48 hours late or retake an assessment to reach a
+    \"Pass\".
+
+### Final Project
+
+The final project is a **capstone empirical analysis** that integrates
+concepts and methods from across the course. Students will design,
+execute, and communicate a spatial data analysis addressing a
+substantive geographic research question using tools developed in the
+three course modules.
+
+The emphasis is on **methodological reasoning, interpretation, and
+synthesis**, rather than technical novelty.
+
+#### Project Scope and Expectations
+
+The final project must:
+
+-   Address a clearly articulated geographic research question
+-   Use spatially referenced data
+-   Apply methods from **at least two course modules**
+-   Be fully reproducible (code, data, and workflow)
+-   Include substantive interpretation of results and limitations
+
+Projects may extend one of the module exercises or pursue a new
+application, subject to instructor approval.
+
+#### Interim Milestones (Required)
+
+To support steady progress and reduce end-of-semester risk, the final
+project includes required interim milestones. All milestones are
+evaluated on a **credit / no-credit** basis and function as gates to the
+final submission.
+
+1.  Project Proposal (Credit / No Credit)
+
+    Due
+    :   Week 6
+
+    **Contents (≈ 1 page):**
+
+    -   Research question and motivation
+    -   Proposed outcome variable
+    -   Preliminary covariates and spatial unit of analysis
+    -   Initial thoughts on applicable course methods
+
+    **Purpose:** Confirm feasibility, spatial grounding, and alignment
+    with course objectives.
+
+2.  Data Approval and Description (Credit / No Credit)
+
+    Due
+    :   Week 8
+
+    **Contents:**
+
+    -   Description of all datasets to be used
+    -   Spatial scale and geographic extent
+    -   Data provenance and known limitations
+    -   Preliminary exploratory figures or maps
+
+    **Purpose:** Ensure data quality and appropriateness before
+    substantive modeling begins.
+
+3.  Methods Plan (Credit / No Credit)
+
+    Due
+    :   Week 10
+
+    **Contents (≈ 1--2 pages):**
+
+    -   Proposed analytical workflow
+    -   Justification for selected methods
+    -   Anticipated challenges (e.g., spatial dependence, heterogeneity,
+        validation)
+
+    **Purpose:** Shift focus from **what tools will be used** to **why
+    they are appropriate**.
+
+4.  Preliminary Results Check-in (Credit / No Credit)
+
+    Due
+    :   Week 13
+
+    **Contents:**
+
+    -   Initial results (tables, figures, or maps)
+    -   Brief interpretation of emerging patterns
+    -   Identification of unresolved issues or concerns
+
+    **Purpose:** Identify conceptual or technical problems early and
+    support synthesis.
+
+5.  Final Submission and Presentation
+
+6.  Written and Computational Submission
+
+    Due
+    :   Prior to final presentations
+
+    Required components:
+
+    -   Reproducible notebook(s)
+    -   Final figures and tables
+    -   Written report (≈ 8--10 pages), including:
+        -   Research question and motivation
+        -   Data and methods
+        -   Results and interpretation
+        -   Limitations and future directions
+
+7.  Oral Presentation
+
+    Scheduled
+
+    :   Week 15 (and Final Exam Period)
+
+    Time
+
+    :   15 minutes total per student
+
+        -   12 minutes presentation
+        -   3 minutes questions
+
+    Presentations will be timed strictly. Emphasis should be on
+    **interpretation and integration**, not technical detail.
+
+8.  Evaluation (Specification-Based)
+
+    The final project is evaluated using specification grading:
+
+    -   **Unsatisfactory** --- Missing elements, unclear reasoning, or
+        reproducibility issues
+    -   **Pass** --- Meets all project specifications with coherent
+        analysis and interpretation
+    -   **High Pass** --- Strong synthesis across modules, clear
+        reasoning, and thoughtful discussion of limitations
+
+### Course Grade
+
+The final grade is determined by applying your project result as a
+modifier to the base grade earned through weekly quizzes, exit tickets,
+and exercises.
+
+#### Base Grade
+
+  Level   Quizzes   Exit Tickets   Exercises
+  ------- --------- -------------- -----------
+  A       13        26             3
+  A-      12        24             3
+  B+      11        22             2
+  B       10        20             2
+  B-      9         18             2
+  C+      8         16             1
+  C       7         14             1
+  C-      6         12             1
+  D+      5         10             1
+  D       4         8              1
+  D-      3         6              1
+
+#### Final Grade
+
+Your course project combines with your base grade to determine the final
+grade.
+
+  Project Result   Final Grade Outcome                     Example
+  ---------------- --------------------------------------- ---------------
+  High Pass        Base Grade 1 Step                       B+ becomes A-   
+  Pass             Base Grade remains unchanged            B+ remains B+
+  Unsatisfactory   Base Grade - 1 Step                     B+ becomes B
+  Not Submitted    Base Grade - 1 Level                    B+ becomes C+
+
+### Tokens
+
+Each student starts the semester with 2 \"tokens\". You can spend a
+token to retake a quiz or submit an exercise 48 hours late. Tokens
+cannot be exchanged between students.
+
+## Policies
+
+### Use of AI and Automated Tools
+
+Students are permitted to use AI-assisted tools (e.g., large language
+models) as part of their regular workflow, including for conceptual
+clarification, exploratory coding, debugging, refactoring, documentation
+drafting, and learning new libraries or methods. AI tools may also be
+used to generate initial code scaffolding or draft explanations,
+provided that students review, modify, and fully understand the
+resulting output.
+
+All submitted work must ultimately reflect the student's own reasoning,
+methodological choices, and interpretation. Students are responsible for
+verifying the correctness, appropriateness, and originality of any
+AI-assisted content. When AI tools are used in a substantive way,
+students should include a brief acknowledgment describing how the tool
+was used.
+
+Use of AI tools does not exempt students from the course standards for
+reproducibility, methodological rigor, or interpretation. Submissions
+that demonstrate superficial understanding, uncritical reliance on
+automated output, or misinterpretation of results will not meet
+specification requirements, regardless of tool use.
+
+### Collaboration, Code Reuse, and Academic Integrity
+
+Collaboration is encouraged in discussions, studio activities, and
+conceptual problem-solving. However, all submitted work must reflect
+individual understanding and authorship unless explicitly designated as
+group work. Reuse of external code (e.g., documentation examples,
+open-source repositories, or course-provided templates) is permitted
+when it is clearly cited and meaningfully adapted to the task at hand.
+Submitting copied code or analyses without attribution, or presenting
+collaborative work as individual work, constitutes academic dishonesty.
+
+### Accessibility and Accommodations
+
+Students who require accommodations due to a disability or other
+documented need are encouraged to contact Student Disability Services
+and notify the instructor as early as possible. Reasonable
+accommodations will be made in accordance with university policy to
+support equitable access to course materials, activities, and
+assessments.
