@@ -1,5 +1,96 @@
 [
   {
+    "objectID": "slides/classification_trees.html",
+    "href": "slides/classification_trees.html",
+    "title": "Classification Trees",
+    "section": "",
+    "text": "This notebook demonstrates classification trees using scikit-learn, including:\nFigures are saved to figures/ for use in lecture slides."
+  },
+  {
+    "objectID": "slides/classification_trees.html#setup",
+    "href": "slides/classification_trees.html#setup",
+    "title": "Classification Trees",
+    "section": "1 1. Setup",
+    "text": "1 1. Setup\n\nimport numpy as np\nimport matplotlib.pyplot as plt\nfrom sklearn.datasets import make_classification\nfrom sklearn.tree import DecisionTreeClassifier, plot_tree\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.metrics import confusion_matrix, classification_report\nimport os\n\nos.makedirs(\"figures\", exist_ok=True)"
+  },
+  {
+    "objectID": "slides/classification_trees.html#generate-data",
+    "href": "slides/classification_trees.html#generate-data",
+    "title": "Classification Trees",
+    "section": "2 2. Generate Data",
+    "text": "2 2. Generate Data\n\nX, y = make_classification(\n    n_samples=500,\n    n_features=2,\n    n_redundant=0,\n    n_clusters_per_class=1,\n    random_state=42\n)"
+  },
+  {
+    "objectID": "slides/classification_trees.html#traintest-split",
+    "href": "slides/classification_trees.html#traintest-split",
+    "title": "Classification Trees",
+    "section": "3 3. Train/Test Split",
+    "text": "3 3. Train/Test Split\n\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.3, random_state=42\n)"
+  },
+  {
+    "objectID": "slides/classification_trees.html#fit-tree-controlled-depth",
+    "href": "slides/classification_trees.html#fit-tree-controlled-depth",
+    "title": "Classification Trees",
+    "section": "4 4. Fit Tree (Controlled Depth)",
+    "text": "4 4. Fit Tree (Controlled Depth)\n\nshallow_clf = DecisionTreeClassifier(max_depth=3, random_state=0)\nshallow_clf.fit(X_train, y_train)"
+  },
+  {
+    "objectID": "slides/classification_trees.html#visualize-tree",
+    "href": "slides/classification_trees.html#visualize-tree",
+    "title": "Classification Trees",
+    "section": "5 5. Visualize Tree",
+    "text": "5 5. Visualize Tree\n\nplt.figure(figsize=(10, 6))\nplot_tree(shallow_clf, filled=True)\nplt.savefig(\"figures/tree_structure.png\", dpi=300, bbox_inches=\"tight\")\nplt.show()"
+  },
+  {
+    "objectID": "slides/classification_trees.html#decision-boundary-function",
+    "href": "slides/classification_trees.html#decision-boundary-function",
+    "title": "Classification Trees",
+    "section": "6 6. Decision Boundary Function",
+    "text": "6 6. Decision Boundary Function\n\ndef plot_boundary(model, X, y, fname=None):\n    x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1\n    y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1\n\n    xx, yy = np.meshgrid(\n        np.linspace(x_min, x_max, 200),\n        np.linspace(y_min, y_max, 200)\n    )\n\n    Z = model.predict(np.c_[xx.ravel(), yy.ravel()])\n    Z = Z.reshape(xx.shape)\n\n    plt.figure()\n    plt.contourf(xx, yy, Z, alpha=0.3)\n    plt.scatter(X[:, 0], X[:, 1], c=y)\n    plt.title(\"Decision Boundary\")\n\n    if fname:\n        plt.savefig(fname, dpi=300, bbox_inches=\"tight\")\n\n    plt.show()"
+  },
+  {
+    "objectID": "slides/classification_trees.html#plot-boundary-shallow-tree",
+    "href": "slides/classification_trees.html#plot-boundary-shallow-tree",
+    "title": "Classification Trees",
+    "section": "7 7. Plot Boundary (Shallow Tree)",
+    "text": "7 7. Plot Boundary (Shallow Tree)\n\nplot_boundary(shallow_clf, X_test, y_test, \"figures/decision_boundary.png\")"
+  },
+  {
+    "objectID": "slides/classification_trees.html#overfitting-demonstration",
+    "href": "slides/classification_trees.html#overfitting-demonstration",
+    "title": "Classification Trees",
+    "section": "8 8. Overfitting Demonstration",
+    "text": "8 8. Overfitting Demonstration\n\ndeep_clf = DecisionTreeClassifier(max_depth=None, random_state=0)\ndeep_clf.fit(X_train, y_train)\n\nplot_boundary(deep_clf, X_test, y_test, \"figures/overfit_boundary.png\")"
+  },
+  {
+    "objectID": "slides/classification_trees.html#cost-complexity-pruning",
+    "href": "slides/classification_trees.html#cost-complexity-pruning",
+    "title": "Classification Trees",
+    "section": "9 9. Cost-Complexity Pruning",
+    "text": "9 9. Cost-Complexity Pruning\nTo study pruning properly, we begin with a fully grown tree and then examine the sequence of smaller trees obtained by increasing the complexity penalty \\(ccp\\_alpha\\).\n\n# Compute the cost-complexity pruning path from the fully grown tree\npath = deep_clf.cost_complexity_pruning_path(X_train, y_train)\nccp_alphas, impurities = path.ccp_alphas, path.impurities\n\nprint(\n    f\"Number of candidate alpha values: {len(ccp_alphas)}\\n\"\n    f\"Largest alpha: {ccp_alphas[-1]}\"\n)\n\n\n9.1 Pruning Path\nAs \\(ccp\\_alpha\\) increases, the penalty on tree complexity increases, so the fitted tree becomes smaller.\n\nplt.figure()\nplt.plot(ccp_alphas, impurities, marker=\"o\", drawstyle=\"steps-post\")\nplt.xlabel(\"alpha\")\nplt.ylabel(\"total leaf impurity\")\nplt.title(\"Cost-Complexity Pruning Path\")\nplt.savefig(\"figures/pruning_path.png\", dpi=300, bbox_inches=\"tight\")\nplt.show()\n\n\n\n9.2 Fit the Sequence of Pruned Trees\nEach value of \\(ccp\\_alpha\\) produces a different subtree.\n\npruned_clfs = []\nfor ccp_alpha in ccp_alphas:\n    pruned_clf = DecisionTreeClassifier(random_state=0, ccp_alpha=ccp_alpha)\n    pruned_clf.fit(X_train, y_train)\n    pruned_clfs.append(pruned_clf)\n\nprint(\n    \"Number of nodes in the last tree is: \"\n    f\"{pruned_clfs[-1].tree_.node_count} with ccp_alpha: {ccp_alphas[-1]}\"\n)\n\n\n\n9.3 Accuracy as a Function of \\(\\alpha\\)\nWe compare training and test accuracy across the pruning path.\n\ntrain_scores = [model.score(X_train, y_train) for model in pruned_clfs]\ntest_scores = [model.score(X_test, y_test) for model in pruned_clfs]\n\nfig, ax = plt.subplots()\nax.set_xlabel(\"alpha\")\nax.set_ylabel(\"accuracy\")\nax.set_title(\"Accuracy vs alpha for training and testing sets\")\nax.plot(ccp_alphas, train_scores, marker=\"o\", label=\"train\", drawstyle=\"steps-post\")\nax.plot(ccp_alphas, test_scores, marker=\"o\", label=\"test\", drawstyle=\"steps-post\")\nax.legend()\nplt.savefig(\"figures/accuracy_alpha.png\", dpi=300, bbox_inches=\"tight\")\nplt.show()\n\n\n\n9.4 Select the Best Pruned Tree\nWe choose the tree corresponding to the value of \\(ccp\\_alpha\\) that gives the highest test accuracy.\n\nbest_idx = np.argmax(test_scores)\nbest_alpha = ccp_alphas[best_idx]\nbest_pruned_clf = pruned_clfs[best_idx]\n\nprint(\"Best alpha:\", best_alpha)\nprint(\"Best pruned tree test accuracy:\", best_pruned_clf.score(X_test, y_test))\nprint(\"Best pruned tree node count:\", best_pruned_clf.tree_.node_count)"
+  },
+  {
+    "objectID": "slides/classification_trees.html#accuracy-and-diagnostics",
+    "href": "slides/classification_trees.html#accuracy-and-diagnostics",
+    "title": "Classification Trees",
+    "section": "10 10. Accuracy and Diagnostics",
+    "text": "10 10. Accuracy and Diagnostics\nNow compare three models:\n\na shallow tree with controlled depth\na fully grown deep tree\nthe selected pruned tree\n\n\nprint(\"Shallow tree accuracy:\", shallow_clf.score(X_test, y_test))\nprint(\"Deep tree accuracy:\", deep_clf.score(X_test, y_test))\nprint(\"Best pruned tree accuracy:\", best_pruned_clf.score(X_test, y_test))\n\n\n10.1 Confusion Matrix and Classification Report for the Selected Pruned Tree\n\nprint(confusion_matrix(y_test, best_pruned_clf.predict(X_test)))\nprint(classification_report(y_test, best_pruned_clf.predict(X_test)))"
+  },
+  {
+    "objectID": "slides/classification_trees.html#precision-and-recall",
+    "href": "slides/classification_trees.html#precision-and-recall",
+    "title": "Classification Trees",
+    "section": "11 Precision and Recall",
+    "text": "11 Precision and Recall\nTo evaluate classification performance, we often use precision and recall, which are derived from the confusion matrix.\n\n11.1 Confusion Matrix (Binary Classification)\nFor a given class (e.g., class 1):\n\nTrue Positives (TP): predicted 1, actually 1\n\nFalse Positives (FP): predicted 1, actually 0\n\nFalse Negatives (FN): predicted 0, actually 1\n\nTrue Negatives (TN): predicted 0, actually 0\n\n\n\n11.2 Precision\n$ = $\nInterpretation:\n\nAmong all observations predicted as positive, how many are actually positive?\n\n\nHigh precision \\(\\rightarrow\\) few false positives\n\nMeasures reliability of positive predictions\n\nPlain language:\n“When the model predicts positive, how often is it correct?”\n\n\n11.3 Recall (Sensitivity)\n$ = $\nInterpretation:\n\nAmong all actual positive observations, how many did we correctly identify?\n\n\nHigh recall \\(\\rightarrow\\) few false negatives\n\nMeasures ability to detect positives\n\nPlain language:\n“Of all the real positives, how many did we find?”\n\n\n11.4 Tradeoff\n\nIncreasing recall often decreases precision\n\nIncreasing precision often decreases recall\n\nThis tradeoff depends on the application: - Medical screening: prioritize high recall\n- Spam detection: prioritize high precision\n\n\n11.5 Summary\n\nPrecision = correctness of positive predictions\n\nRecall = completeness of detecting positives\n\n\n\n11.6 F1 Score\nThe F1 score combines precision and recall into a single metric.\n$ F_1 = 2 $\nIt is the harmonic mean of precision and recall.\n\n\n\n11.7 Interpretation\n\nF1 measures the balance between: - precision (how accurate positive predictions are) - recall (how well we find all positives)\n\n\nHigh F1 \\(\\rightarrow\\) both precision and recall are high\n\nLow F1 \\(\\rightarrow\\) at least one of them is low\n\n\n\n\n11.8 Why not just average them?\nThe harmonic mean penalizes imbalance:\n\nIf precision is high but recall is low \\(\\rightarrow\\) F1 is low\n\nIf recall is high but precision is low \\(\\rightarrow\\) F1 is low\n\nSo both must be good to get a high F1 score.\n\n\n\n11.9 Example\nIf: - Precision = 0.80\n- Recall = 0.60\n$ F_1 = 2 = $\n\n\n\n11.10 When to use F1\nUse F1 when:\n\nYou care about both precision and recall\nThe data are imbalanced\nBoth false positives and false negatives matter\n\n\n\n\n11.11 Summary\n\nPrecision = correctness of positive predictions\n\nRecall = completeness of detecting positives\n\nF1 = balance between the two"
+  },
+  {
+    "objectID": "slides/classification_trees.html#feature-importance",
+    "href": "slides/classification_trees.html#feature-importance",
+    "title": "Classification Trees",
+    "section": "12 11. Feature Importance",
+    "text": "12 11. Feature Importance\nFeature importance is computed from the total impurity reduction attributed to each feature across the fitted tree.\nHere we visualize the feature importance for the selected pruned tree.\n\nplt.figure()\nplt.bar(\n    range(len(best_pruned_clf.feature_importances_)),\n    best_pruned_clf.feature_importances_,\n)\nplt.title(\"Feature Importance (Best Pruned Tree)\")\nplt.savefig(\"figures/feature_importance.png\", dpi=300, bbox_inches=\"tight\")\nplt.show()"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Geography 585: Quantitative Methods in Geographic Research",
@@ -60,7 +151,7 @@
     "href": "index.html#module-iii-spatial-machine-learning",
     "title": "Geography 585: Quantitative Methods in Geographic Research",
     "section": "Module III: Spatial Machine Learning",
-    "text": "Module III: Spatial Machine Learning\nFocus: Prediction, non-linearity, and validation strategies.\n\n\n\nWeek\nDate\nActivity & Content\n\n\n\n\n9\nMar 24\nTuesday: Spatial Feature Engineering. Embedding \"space\" into \\(X\\). L8\n\n\n\nMar 26\nThursday: Studio: Engineer 50+ spatial features for Scikit-Learn.\n\n\n\n\nReading: Rey, S.J. et al. (2023). Spatial Feature Engineering.\n\n\nSB\nMar 31\nSpring Break\n\n\n\nApr 2\nSpring Break\n\n\n10\nApr 7\nTuesday: Unsupervised Clustering. K-Means, DBSCAN, Hierarchical.\n\n\n\nMar 9\nThursday: Studio: \"Geodemographics.\" Cluster neighborhoods based on lifestyle data.\n\n\n\n\nReading: Rey, S.J. et al. (2023). Clustering and Regionalization.\n\n\n11\nApr 14\nTuesday: Tree-Based Methods. Random Forests & XGBoost in Space.\n\n\n\nApr 16\nThursday: Exercise 3\n\n\n\n\nReading: Georganos, S., et al. (2021). Geographical Random Forests: A spatial regression approach.\n\n\n12\nApr 21\nTuesday: Spatial Cross-Validation. Leakage, Blocking, and Buffered CV.\n\n\n\nApr 23\nThursday: Exercise 3\n\n\n\n\nReading: Roberts, D. R., et al. (2017). Cross-validation strategies for data with spatial structure.\n\n\n13\nApr 28\nTuesday: Projects\n\n\n\nApr 30\nThursday: Projects\n\n\n14\nMay 5\nTuesday: Presentations.\n\n\n\nMay 7\nThursday: Presentations."
+    "text": "Module III: Spatial Machine Learning\nFocus: Prediction, non-linearity, and validation strategies.\n\n\n\nWeek\nDate\nActivity & Content\n\n\n\n\n9\nMar 24\nTuesday: Spatial Feature Engineering. Embedding \"space\" into \\(X\\). L8\n\n\n\n\nReading: Rey, S.J. et al. (2023). Spatial Feature Engineering.\n\n\n\nMar 26\nThursday: Unsupervised Clustering. K-Means, DBSCAN, Hierarchical. L8\n\n\n\n\nReading: Rey, S.J. et al. (2023). Clustering and Regionalization.\n\n\nSB\nMar 31\nSpring Break\n\n\n\nApr 2\nSpring Break\n\n\n10\nApr 7\nTuesday: Decision Trees. L9\n\n\n\nApr 9\nThursday: Decision Trees in Scikit-Learn. N9\n\n\n\n\nReading: Rey, S.J. et al. (2023). Clustering and Regionalization.\n\n\n11\nApr 14\nTuesday: Random Forests\n\n\n\nApr 16\nThursday: Spatial Cross-Validation. Leakage, Blocking, and Buffered CV.\n\n\n\n\nReading: Georganos, S., et al. (2021). Geographical Random Forests: A spatial regression approach.\n\n\n12\nApr 21\nTuesday: Exercise 3\n\n\n\nApr 23\nThursday: Exercise 3\n\n\n\n\nReading: Roberts, D. R., et al. (2017). Cross-validation strategies for data with spatial structure.\n\n\n13\nApr 28\nTuesday: Projects\n\n\n\nApr 30\nThursday: Projects\n\n\n14\nMay 5\nTuesday: Presentations.\n\n\n\nMay 7\nThursday: Presentations."
   },
   {
     "objectID": "index.html#software-and-tools",

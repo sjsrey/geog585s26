@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Classification Trees – GEOG 585</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-67a454c823f0b95208dd2bdc6c2dfe0a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">GEOG 585</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#setup" id="toc-setup" class="nav-link active" data-scroll-target="#setup"><span class="header-section-number">1</span> 1. Setup</a></li>
+  <li><a href="#generate-data" id="toc-generate-data" class="nav-link" data-scroll-target="#generate-data"><span class="header-section-number">2</span> 2. Generate Data</a></li>
+  <li><a href="#traintest-split" id="toc-traintest-split" class="nav-link" data-scroll-target="#traintest-split"><span class="header-section-number">3</span> 3. Train/Test Split</a></li>
+  <li><a href="#fit-tree-controlled-depth" id="toc-fit-tree-controlled-depth" class="nav-link" data-scroll-target="#fit-tree-controlled-depth"><span class="header-section-number">4</span> 4. Fit Tree (Controlled Depth)</a></li>
+  <li><a href="#visualize-tree" id="toc-visualize-tree" class="nav-link" data-scroll-target="#visualize-tree"><span class="header-section-number">5</span> 5. Visualize Tree</a></li>
+  <li><a href="#decision-boundary-function" id="toc-decision-boundary-function" class="nav-link" data-scroll-target="#decision-boundary-function"><span class="header-section-number">6</span> 6. Decision Boundary Function</a></li>
+  <li><a href="#plot-boundary-shallow-tree" id="toc-plot-boundary-shallow-tree" class="nav-link" data-scroll-target="#plot-boundary-shallow-tree"><span class="header-section-number">7</span> 7. Plot Boundary (Shallow Tree)</a></li>
+  <li><a href="#overfitting-demonstration" id="toc-overfitting-demonstration" class="nav-link" data-scroll-target="#overfitting-demonstration"><span class="header-section-number">8</span> 8. Overfitting Demonstration</a></li>
+  <li><a href="#cost-complexity-pruning" id="toc-cost-complexity-pruning" class="nav-link" data-scroll-target="#cost-complexity-pruning"><span class="header-section-number">9</span> 9. Cost-Complexity Pruning</a>
+  <ul class="collapse">
+  <li><a href="#pruning-path" id="toc-pruning-path" class="nav-link" data-scroll-target="#pruning-path"><span class="header-section-number">9.1</span> Pruning Path</a></li>
+  <li><a href="#fit-the-sequence-of-pruned-trees" id="toc-fit-the-sequence-of-pruned-trees" class="nav-link" data-scroll-target="#fit-the-sequence-of-pruned-trees"><span class="header-section-number">9.2</span> Fit the Sequence of Pruned Trees</a></li>
+  <li><a href="#accuracy-as-a-function-of-alpha" id="toc-accuracy-as-a-function-of-alpha" class="nav-link" data-scroll-target="#accuracy-as-a-function-of-alpha"><span class="header-section-number">9.3</span> Accuracy as a Function of <span class="math inline">\(\alpha\)</span></a></li>
+  <li><a href="#select-the-best-pruned-tree" id="toc-select-the-best-pruned-tree" class="nav-link" data-scroll-target="#select-the-best-pruned-tree"><span class="header-section-number">9.4</span> Select the Best Pruned Tree</a></li>
+  </ul></li>
+  <li><a href="#accuracy-and-diagnostics" id="toc-accuracy-and-diagnostics" class="nav-link" data-scroll-target="#accuracy-and-diagnostics"><span class="header-section-number">10</span> 10. Accuracy and Diagnostics</a>
+  <ul class="collapse">
+  <li><a href="#confusion-matrix-and-classification-report-for-the-selected-pruned-tree" id="toc-confusion-matrix-and-classification-report-for-the-selected-pruned-tree" class="nav-link" data-scroll-target="#confusion-matrix-and-classification-report-for-the-selected-pruned-tree"><span class="header-section-number">10.1</span> Confusion Matrix and Classification Report for the Selected Pruned Tree</a></li>
+  </ul></li>
+  <li><a href="#precision-and-recall" id="toc-precision-and-recall" class="nav-link" data-scroll-target="#precision-and-recall"><span class="header-section-number">11</span> Precision and Recall</a>
+  <ul class="collapse">
+  <li><a href="#confusion-matrix-binary-classification" id="toc-confusion-matrix-binary-classification" class="nav-link" data-scroll-target="#confusion-matrix-binary-classification"><span class="header-section-number">11.1</span> Confusion Matrix (Binary Classification)</a></li>
+  <li><a href="#precision" id="toc-precision" class="nav-link" data-scroll-target="#precision"><span class="header-section-number">11.2</span> Precision</a></li>
+  <li><a href="#recall-sensitivity" id="toc-recall-sensitivity" class="nav-link" data-scroll-target="#recall-sensitivity"><span class="header-section-number">11.3</span> Recall (Sensitivity)</a></li>
+  <li><a href="#tradeoff" id="toc-tradeoff" class="nav-link" data-scroll-target="#tradeoff"><span class="header-section-number">11.4</span> Tradeoff</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">11.5</span> Summary</a></li>
+  <li><a href="#f1-score" id="toc-f1-score" class="nav-link" data-scroll-target="#f1-score"><span class="header-section-number">11.6</span> F1 Score</a></li>
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation"><span class="header-section-number">11.7</span> Interpretation</a></li>
+  <li><a href="#why-not-just-average-them" id="toc-why-not-just-average-them" class="nav-link" data-scroll-target="#why-not-just-average-them"><span class="header-section-number">11.8</span> Why not just average them?</a></li>
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="header-section-number">11.9</span> Example</a></li>
+  <li><a href="#when-to-use-f1" id="toc-when-to-use-f1" class="nav-link" data-scroll-target="#when-to-use-f1"><span class="header-section-number">11.10</span> When to use F1</a></li>
+  <li><a href="#summary-1" id="toc-summary-1" class="nav-link" data-scroll-target="#summary-1"><span class="header-section-number">11.11</span> Summary</a></li>
+  </ul></li>
+  <li><a href="#feature-importance" id="toc-feature-importance" class="nav-link" data-scroll-target="#feature-importance"><span class="header-section-number">12</span> 11. Feature Importance</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Classification Trees</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This notebook demonstrates classification trees using scikit-learn, including:</p>
+<ul>
+<li>Tree fitting and visualization<br>
+</li>
+<li>Decision boundaries<br>
+</li>
+<li>Overfitting<br>
+</li>
+<li>Cost-complexity pruning<br>
+</li>
+<li>Model diagnostics</li>
+</ul>
+<p>Figures are saved to <code>figures/</code> for use in lecture slides.</p>
+<section id="setup" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="setup"><span class="header-section-number">1</span> 1. Setup</h2>
+<div id="20a65794" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_classification</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier, plot_tree</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> confusion_matrix, classification_report</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>os.makedirs(<span class="st">"figures"</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="generate-data" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="generate-data"><span class="header-section-number">2</span> 2. Generate Data</h2>
+<div id="538cff2a" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> make_classification(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    n_samples<span class="op">=</span><span class="dv">500</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    n_features<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    n_redundant<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    n_clusters_per_class<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="traintest-split" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="traintest-split"><span class="header-section-number">3</span> 3. Train/Test Split</h2>
+<div id="0ed20428" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    X, y, test_size<span class="op">=</span><span class="fl">0.3</span>, random_state<span class="op">=</span><span class="dv">42</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="fit-tree-controlled-depth" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="fit-tree-controlled-depth"><span class="header-section-number">4</span> 4. Fit Tree (Controlled Depth)</h2>
+<div id="948ceb31" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>shallow_clf <span class="op">=</span> DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">3</span>, random_state<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>shallow_clf.fit(X_train, y_train)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="visualize-tree" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="visualize-tree"><span class="header-section-number">5</span> 5. Visualize Tree</h2>
+<div id="3105f90d" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plot_tree(shallow_clf, filled<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">"figures/tree_structure.png"</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="decision-boundary-function" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="decision-boundary-function"><span class="header-section-number">6</span> 6. Decision Boundary Function</h2>
+<div id="4f4cd852" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_boundary(model, X, y, fname<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    x_min, x_max <span class="op">=</span> X[:, <span class="dv">0</span>].<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, X[:, <span class="dv">0</span>].<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    y_min, y_max <span class="op">=</span> X[:, <span class="dv">1</span>].<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, X[:, <span class="dv">1</span>].<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    xx, yy <span class="op">=</span> np.meshgrid(</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        np.linspace(x_min, x_max, <span class="dv">200</span>),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        np.linspace(y_min, y_max, <span class="dv">200</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    Z <span class="op">=</span> model.predict(np.c_[xx.ravel(), yy.ravel()])</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    Z <span class="op">=</span> Z.reshape(xx.shape)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    plt.figure()</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    plt.contourf(xx, yy, Z, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    plt.scatter(X[:, <span class="dv">0</span>], X[:, <span class="dv">1</span>], c<span class="op">=</span>y)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">"Decision Boundary"</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> fname:</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>        plt.savefig(fname, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="plot-boundary-shallow-tree" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="plot-boundary-shallow-tree"><span class="header-section-number">7</span> 7. Plot Boundary (Shallow Tree)</h2>
+<div id="82d54c9b" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plot_boundary(shallow_clf, X_test, y_test, <span class="st">"figures/decision_boundary.png"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="overfitting-demonstration" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="overfitting-demonstration"><span class="header-section-number">8</span> 8. Overfitting Demonstration</h2>
+<div id="2d3eff90" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>deep_clf <span class="op">=</span> DecisionTreeClassifier(max_depth<span class="op">=</span><span class="va">None</span>, random_state<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>deep_clf.fit(X_train, y_train)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>plot_boundary(deep_clf, X_test, y_test, <span class="st">"figures/overfit_boundary.png"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="cost-complexity-pruning" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="cost-complexity-pruning"><span class="header-section-number">9</span> 9. Cost-Complexity Pruning</h2>
+<p>To study pruning properly, we begin with a <strong>fully grown tree</strong> and then examine the sequence of smaller trees obtained by increasing the complexity penalty <span class="math inline">\(ccp\_alpha\)</span>.</p>
+<div id="811471cc" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the cost-complexity pruning path from the fully grown tree</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> deep_clf.cost_complexity_pruning_path(X_train, y_train)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>ccp_alphas, impurities <span class="op">=</span> path.ccp_alphas, path.impurities</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"Number of candidate alpha values: </span><span class="sc">{</span><span class="bu">len</span>(ccp_alphas)<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"Largest alpha: </span><span class="sc">{</span>ccp_alphas[<span class="op">-</span><span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="pruning-path" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="pruning-path"><span class="header-section-number">9.1</span> Pruning Path</h3>
+<p>As <span class="math inline">\(ccp\_alpha\)</span> increases, the penalty on tree complexity increases, so the fitted tree becomes smaller.</p>
+<div id="cf377dbb" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plt.plot(ccp_alphas, impurities, marker<span class="op">=</span><span class="st">"o"</span>, drawstyle<span class="op">=</span><span class="st">"steps-post"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"alpha"</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"total leaf impurity"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Cost-Complexity Pruning Path"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">"figures/pruning_path.png"</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="fit-the-sequence-of-pruned-trees" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="fit-the-sequence-of-pruned-trees"><span class="header-section-number">9.2</span> Fit the Sequence of Pruned Trees</h3>
+<p>Each value of <span class="math inline">\(ccp\_alpha\)</span> produces a different subtree.</p>
+<div id="7321e290" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>pruned_clfs <span class="op">=</span> []</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ccp_alpha <span class="kw">in</span> ccp_alphas:</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    pruned_clf <span class="op">=</span> DecisionTreeClassifier(random_state<span class="op">=</span><span class="dv">0</span>, ccp_alpha<span class="op">=</span>ccp_alpha)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    pruned_clf.fit(X_train, y_train)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    pruned_clfs.append(pruned_clf)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Number of nodes in the last tree is: "</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"</span><span class="sc">{</span>pruned_clfs[<span class="op">-</span><span class="dv">1</span>]<span class="sc">.</span>tree_<span class="sc">.</span>node_count<span class="sc">}</span><span class="ss"> with ccp_alpha: </span><span class="sc">{</span>ccp_alphas[<span class="op">-</span><span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="accuracy-as-a-function-of-alpha" class="level3" data-number="9.3">
+<h3 data-number="9.3" class="anchored" data-anchor-id="accuracy-as-a-function-of-alpha"><span class="header-section-number">9.3</span> Accuracy as a Function of <span class="math inline">\(\alpha\)</span></h3>
+<p>We compare training and test accuracy across the pruning path.</p>
+<div id="fee493f5" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>train_scores <span class="op">=</span> [model.score(X_train, y_train) <span class="cf">for</span> model <span class="kw">in</span> pruned_clfs]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>test_scores <span class="op">=</span> [model.score(X_test, y_test) <span class="cf">for</span> model <span class="kw">in</span> pruned_clfs]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"alpha"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"accuracy"</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Accuracy vs alpha for training and testing sets"</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>ax.plot(ccp_alphas, train_scores, marker<span class="op">=</span><span class="st">"o"</span>, label<span class="op">=</span><span class="st">"train"</span>, drawstyle<span class="op">=</span><span class="st">"steps-post"</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>ax.plot(ccp_alphas, test_scores, marker<span class="op">=</span><span class="st">"o"</span>, label<span class="op">=</span><span class="st">"test"</span>, drawstyle<span class="op">=</span><span class="st">"steps-post"</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">"figures/accuracy_alpha.png"</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="select-the-best-pruned-tree" class="level3" data-number="9.4">
+<h3 data-number="9.4" class="anchored" data-anchor-id="select-the-best-pruned-tree"><span class="header-section-number">9.4</span> Select the Best Pruned Tree</h3>
+<p>We choose the tree corresponding to the value of <span class="math inline">\(ccp\_alpha\)</span> that gives the highest test accuracy.</p>
+<div id="9e22fda8" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>best_idx <span class="op">=</span> np.argmax(test_scores)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>best_alpha <span class="op">=</span> ccp_alphas[best_idx]</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>best_pruned_clf <span class="op">=</span> pruned_clfs[best_idx]</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Best alpha:"</span>, best_alpha)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Best pruned tree test accuracy:"</span>, best_pruned_clf.score(X_test, y_test))</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Best pruned tree node count:"</span>, best_pruned_clf.tree_.node_count)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="accuracy-and-diagnostics" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="accuracy-and-diagnostics"><span class="header-section-number">10</span> 10. Accuracy and Diagnostics</h2>
+<p>Now compare three models:</p>
+<ul>
+<li>a shallow tree with controlled depth</li>
+<li>a fully grown deep tree</li>
+<li>the selected pruned tree</li>
+</ul>
+<div id="d264a042" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Shallow tree accuracy:"</span>, shallow_clf.score(X_test, y_test))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Deep tree accuracy:"</span>, deep_clf.score(X_test, y_test))</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Best pruned tree accuracy:"</span>, best_pruned_clf.score(X_test, y_test))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="confusion-matrix-and-classification-report-for-the-selected-pruned-tree" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="confusion-matrix-and-classification-report-for-the-selected-pruned-tree"><span class="header-section-number">10.1</span> Confusion Matrix and Classification Report for the Selected Pruned Tree</h3>
+<div id="d97247b7" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(confusion_matrix(y_test, best_pruned_clf.predict(X_test)))</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test, best_pruned_clf.predict(X_test)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="precision-and-recall" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="precision-and-recall"><span class="header-section-number">11</span> Precision and Recall</h2>
+<p>To evaluate classification performance, we often use <strong>precision</strong> and <strong>recall</strong>, which are derived from the confusion matrix.</p>
+<section id="confusion-matrix-binary-classification" class="level3" data-number="11.1">
+<h3 data-number="11.1" class="anchored" data-anchor-id="confusion-matrix-binary-classification"><span class="header-section-number">11.1</span> Confusion Matrix (Binary Classification)</h3>
+<p>For a given class (e.g., class 1):</p>
+<ul>
+<li><strong>True Positives (TP)</strong>: predicted 1, actually 1<br>
+</li>
+<li><strong>False Positives (FP)</strong>: predicted 1, actually 0<br>
+</li>
+<li><strong>False Negatives (FN)</strong>: predicted 0, actually 1<br>
+</li>
+<li><strong>True Negatives (TN)</strong>: predicted 0, actually 0</li>
+</ul>
+</section>
+<section id="precision" class="level3" data-number="11.2">
+<h3 data-number="11.2" class="anchored" data-anchor-id="precision"><span class="header-section-number">11.2</span> Precision</h3>
+<p>$ = $</p>
+<p><strong>Interpretation:</strong></p>
+<blockquote class="blockquote">
+<p>Among all observations predicted as positive, how many are actually positive?</p>
+</blockquote>
+<ul>
+<li>High precision <span class="math inline">\(\rightarrow\)</span> few false positives<br>
+</li>
+<li>Measures reliability of positive predictions</li>
+</ul>
+<p><strong>Plain language:</strong><br>
+<em>“When the model predicts positive, how often is it correct?”</em></p>
+</section>
+<section id="recall-sensitivity" class="level3" data-number="11.3">
+<h3 data-number="11.3" class="anchored" data-anchor-id="recall-sensitivity"><span class="header-section-number">11.3</span> Recall (Sensitivity)</h3>
+<p>$ = $</p>
+<p><strong>Interpretation:</strong></p>
+<blockquote class="blockquote">
+<p>Among all actual positive observations, how many did we correctly identify?</p>
+</blockquote>
+<ul>
+<li>High recall <span class="math inline">\(\rightarrow\)</span> few false negatives<br>
+</li>
+<li>Measures ability to detect positives</li>
+</ul>
+<p><strong>Plain language:</strong><br>
+<em>“Of all the real positives, how many did we find?”</em></p>
+</section>
+<section id="tradeoff" class="level3" data-number="11.4">
+<h3 data-number="11.4" class="anchored" data-anchor-id="tradeoff"><span class="header-section-number">11.4</span> Tradeoff</h3>
+<ul>
+<li>Increasing recall often decreases precision<br>
+</li>
+<li>Increasing precision often decreases recall</li>
+</ul>
+<p>This tradeoff depends on the application: - Medical screening: prioritize <strong>high recall</strong><br>
+- Spam detection: prioritize <strong>high precision</strong></p>
+</section>
+<section id="summary" class="level3" data-number="11.5">
+<h3 data-number="11.5" class="anchored" data-anchor-id="summary"><span class="header-section-number">11.5</span> Summary</h3>
+<ul>
+<li><strong>Precision</strong> = correctness of positive predictions<br>
+</li>
+<li><strong>Recall</strong> = completeness of detecting positives</li>
+</ul>
+</section>
+<section id="f1-score" class="level3" data-number="11.6">
+<h3 data-number="11.6" class="anchored" data-anchor-id="f1-score"><span class="header-section-number">11.6</span> F1 Score</h3>
+<p>The <strong>F1 score</strong> combines precision and recall into a single metric.</p>
+<p>$ F_1 = 2 $</p>
+<p>It is the <strong>harmonic mean</strong> of precision and recall.</p>
+<hr>
+</section>
+<section id="interpretation" class="level3" data-number="11.7">
+<h3 data-number="11.7" class="anchored" data-anchor-id="interpretation"><span class="header-section-number">11.7</span> Interpretation</h3>
+<blockquote class="blockquote">
+<p>F1 measures the balance between: - <strong>precision</strong> (how accurate positive predictions are) - <strong>recall</strong> (how well we find all positives)</p>
+</blockquote>
+<ul>
+<li>High F1 <span class="math inline">\(\rightarrow\)</span> both precision and recall are high<br>
+</li>
+<li>Low F1 <span class="math inline">\(\rightarrow\)</span> at least one of them is low</li>
+</ul>
+<hr>
+</section>
+<section id="why-not-just-average-them" class="level3" data-number="11.8">
+<h3 data-number="11.8" class="anchored" data-anchor-id="why-not-just-average-them"><span class="header-section-number">11.8</span> Why not just average them?</h3>
+<p>The harmonic mean penalizes imbalance:</p>
+<ul>
+<li>If precision is high but recall is low <span class="math inline">\(\rightarrow\)</span> F1 is low<br>
+</li>
+<li>If recall is high but precision is low <span class="math inline">\(\rightarrow\)</span> F1 is low</li>
+</ul>
+<p>So both must be good to get a high F1 score.</p>
+<hr>
+</section>
+<section id="example" class="level3" data-number="11.9">
+<h3 data-number="11.9" class="anchored" data-anchor-id="example"><span class="header-section-number">11.9</span> Example</h3>
+<p>If: - Precision = 0.80<br>
+- Recall = 0.60</p>
+<p>$ F_1 = 2 = $</p>
+<hr>
+</section>
+<section id="when-to-use-f1" class="level3" data-number="11.10">
+<h3 data-number="11.10" class="anchored" data-anchor-id="when-to-use-f1"><span class="header-section-number">11.10</span> When to use F1</h3>
+<p>Use F1 when:</p>
+<ul>
+<li>You care about <strong>both precision and recall</strong></li>
+<li>The data are <strong>imbalanced</strong></li>
+<li>Both false positives and false negatives matter</li>
+</ul>
+<hr>
+</section>
+<section id="summary-1" class="level3" data-number="11.11">
+<h3 data-number="11.11" class="anchored" data-anchor-id="summary-1"><span class="header-section-number">11.11</span> Summary</h3>
+<ul>
+<li><strong>Precision</strong> = correctness of positive predictions<br>
+</li>
+<li><strong>Recall</strong> = completeness of detecting positives<br>
+</li>
+<li><strong>F1</strong> = balance between the two</li>
+</ul>
+</section>
+</section>
+<section id="feature-importance" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="feature-importance"><span class="header-section-number">12</span> 11. Feature Importance</h2>
+<p>Feature importance is computed from the total impurity reduction attributed to each feature across the fitted tree.</p>
+<p>Here we visualize the feature importance for the <strong>selected pruned tree</strong>.</p>
+<div id="e52c76e4" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>plt.bar(</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">range</span>(<span class="bu">len</span>(best_pruned_clf.feature_importances_)),</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    best_pruned_clf.feature_importances_,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Feature Importance (Best Pruned Tree)"</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">"figures/feature_importance.png"</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/sjsrey\.github\.io\/geog585s26\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
